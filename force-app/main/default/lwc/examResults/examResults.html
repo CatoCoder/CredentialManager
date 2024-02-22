@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Credential Selector" icon-name="custom:custom29">
+        <div class="slds-card__body slds-card__body_inner">
+            <template lwc:if={credentialOptions}>
+                <lightning-combobox label="Select a Credential" options={credentialOptions}
+                    onchange={handleRecordSelected} class="slds-var-m-bottom_medium" required></lightning-combobox>
+            </template>
+            <template lwc:elseif={error}>
+                {error}
+            </template>
+            <template lwc:if={showList}>
+                <div class="slds-grid slds-wrap slds-m-bottom_small">
+                    <div class="slds-col slds-size_4-of-6">
+                        <span>Topic Name</span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <span>Weighting</span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-6">
+                        <span>Result</span>
+                    </div>
+                </div>
+                <template lwc:if={topics}>
+                    <template for:each={topics} for:item="topic">
+                        <div class="slds-grid slds-wrap slds-m-bottom_small" key={topic.Order__c}>
+                            <div class="slds-col slds-size_4-of-6">{topic.Name}</div>
+                            <div class="slds-col slds-size_1-of-6">{topic.Weighting__c}%</div>
+                            <div class="slds-col slds-size_1-of-6"><input name={topic.Order__c} type="number"
+                                    required="" class="slds-input" onchange={handleResult}></div>
+                        </div>
+                    </template>
+                    <div class="slds-grid slds-wrap slds-m-bottom_small">
+                        <div class="slds-col slds-size_2-of-6">
+                            <span>User</span><input class="slds-input" id="user" type="dropdown">
+                        </div>
+                        <div class="slds-col slds-size_2-of-6">
+                            <span>Date Taken</span>
+                            <input type="date" id="date" class="slds-input">
+                        </div>
+                        <div class="slds-col slds-size_1-of-6">
+                        </div>
+                        <div class="slds-col slds-size_1-of-6">
+                            <span>Total</span><br>
+                            <span>{totalResult}</span>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>
